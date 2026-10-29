@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StorySummary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["headline", "summary", "category", "importance", "locations", "event_date", "glossary"],
+  "properties": {
+    "headline": { "type": "string", "maxLength": 90, "description": "French. Factual, no clickbait, no final period." },
+    "summary": { "type": "string", "maxLength": 300, "description": "French, 1 to 3 short sentences, plain language." },
+    "context": { "type": ["string", "null"], "maxLength": 220, "description": "Optional French background in 1 to 2 sentences, or null." },
+    "category": { "type": "string", "enum": ["politique","economie","monde","conflits","tech","science","sante","climat","societe","culture","sport"] },
+    "importance": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "locations": {
+      "type": "array", "maxItems": 3,
+      "items": { "type": "object", "additionalProperties": false, "required": ["name", "country"],
+        "properties": { "name": { "type": "string" }, "country": { "type": ["string", "null"], "description": "ISO 3166-1 alpha-2 or null" } } }
+    },
+    "event_date": { "type": ["string", "null"], "description": "ISO 8601 date or datetime of the event, or null if unknown." },
+    "glossary": {
+      "type": "array", "maxItems": 3,
+      "items": { "type": "object", "additionalProperties": false, "required": ["surface", "canonical", "definition"],
+        "properties": {
+          "surface": { "type": "string", "description": "Exact text as written in headline or summary." },
+          "canonical": { "type": "string", "description": "Dictionary form. Reuse one from known_terms when it fits." },
+          "definition": { "type": "string", "maxLength": 140, "description": "French, one sentence, neutral." }
+        } }
+    }
+  }
+}

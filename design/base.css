@@ -1,0 +1,63 @@
+/* Reset + typography + the two signature elements: importance rail and glossary mark. */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--c-paper); color: var(--c-ink);
+  font-family: var(--font-text); font-size: var(--fs-body); line-height: var(--lh-text);
+  text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-display); font-weight: 750; font-stretch: calc(var(--wdth-display) * 1%); line-height: var(--lh-tight); letter-spacing: -0.012em; text-wrap: balance; }
+p { margin: 0; max-width: var(--measure); text-wrap: pretty; }
+a { color: var(--c-accent); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+button { font: inherit; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 3px; border-radius: 2px; }
+
+/* UI + meta text (sentence case, no letter-spaced caps) */
+.ui { font-family: var(--font-ui); font-size: var(--fs-ui); line-height: var(--lh-ui); font-weight: 500; }
+.meta { font-family: var(--font-ui); font-size: var(--fs-meta); line-height: var(--lh-ui); font-weight: 500; color: var(--c-ink-2); font-variant-numeric: tabular-nums; }
+.icon { width: 1.125em; height: 1.125em; flex: none; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* Signature 1: importance rail. Width encodes importance. Usage: <article class="rail" data-level="high"> */
+[data-level] { --rail-w: var(--rail-1); --rail-c: var(--c-line); }
+[data-level="mid"]   { --rail-w: var(--rail-2); --rail-c: color-mix(in srgb, var(--c-accent) 55%, var(--c-paper)); }
+[data-level="high"],
+[data-level="flash"] { --rail-w: var(--rail-3); --rail-c: var(--c-accent); }
+.rail { position: relative; padding-inline-start: calc(var(--rail-w) + var(--s-4)); }
+.rail::before {
+  content: ""; position: absolute; inset-block: 0; inset-inline-start: 0;
+  width: var(--rail-w); background: var(--rail-c); transform-origin: top;
+}
+/* flash level: inverted block, set by the component */
+[data-level="flash"].rail { background: var(--c-accent); color: var(--c-accent-ink); }
+[data-level="flash"].rail::before { background: var(--c-mark); }
+[data-level="flash"] .meta, [data-level="flash"] a { color: inherit; }
+
+/* Signature 2: glossary term, a highlighter stroke. Usage: <button class="term" aria-expanded="false">mot</button> */
+.term {
+  display: inline; padding: 0 0.1em; margin: 0 -0.1em; border: 0; cursor: pointer; text-align: inherit;
+  font: inherit; color: inherit; letter-spacing: inherit;
+  background: linear-gradient(var(--c-mark), var(--c-mark)) no-repeat 0 90% / 100% 0.34em;
+  transition: background-size var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
+}
+.term:hover, .term:focus-visible, .term[aria-expanded="true"] { background-size: 100% 100%; color: var(--c-mark-ink); }
+
+/* Popover card (glossary, tooltips): square-ish radius, 1px ink border, hard yellow offset */
+.popover {
+  background: var(--c-surface); color: var(--c-ink); border: 1px solid var(--c-ink);
+  border-radius: var(--r-2); box-shadow: var(--pop-shadow); padding: var(--s-3) var(--s-4);
+  max-width: 20rem; font-family: var(--font-ui); font-size: var(--fs-ui); line-height: var(--lh-ui); z-index: var(--z-pop);
+}
+.popover strong { display: block; font-weight: 750; margin-bottom: var(--s-1); }
+
+/* Filter chip (only element using pill radius) */
+.chip { display: inline-flex; align-items: center; gap: var(--s-2); padding: 0.3rem 0.75rem; border: 1px solid var(--c-line); border-radius: var(--r-pill); background: transparent; font-family: var(--font-ui); font-size: var(--fs-meta); font-weight: 600; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--c-ink); color: var(--c-paper); border-color: var(--c-ink); }
+.btn { display: inline-flex; align-items: center; gap: var(--s-2); padding: 0.55rem 0.95rem; border: 1px solid var(--c-ink); border-radius: var(--r-1); background: var(--c-ink); color: var(--c-paper); font-family: var(--font-ui); font-size: var(--fs-ui); font-weight: 600; cursor: pointer; }
+.btn--accent { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-accent-ink); }
+.btn--ghost { background: transparent; color: var(--c-ink); }
+
+/* Icons: online library (Lucide). Overrides the library defaults so every icon gets the angular Brève look. */
+.icon, svg.lucide { width: 1.125em; height: 1.125em; flex: none; stroke-width: 1.75; stroke-linecap: square; stroke-linejoin: miter; }

@@ -1,0 +1,18 @@
+{
+  "name": "breve",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": ["apps/web", "ingest"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "npm run dev -w apps/web",
+    "build": "npm run build -w apps/web",
+    "check": "npm run check -w apps/web && npm run check -w ingest",
+    "test": "npm run test -w ingest && npm run test -w apps/web",
+    "ingest": "npm run ingest -w ingest",
+    "sync:design": "node scripts/sync-design.mjs",
+    "format": "prettier --write ."
+  },
+  "devDependencies": { "prettier": "^3.3.0" }
+}

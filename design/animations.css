@@ -1,0 +1,30 @@
+/* Motion rules: one orchestrated moment on load (rails draw), the rest answers a user action. Nothing loops. */
+@keyframes brk-draw   { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes brk-pop    { from { opacity: 0; transform: translateY(4px) scale(0.98); box-shadow: 0 0 0 var(--c-mark); } to { opacity: 1; transform: none; box-shadow: var(--pop-shadow); } }
+@keyframes brk-flash  { from { background-color: var(--c-mark); } to { background-color: transparent; } }
+@keyframes brk-sheet  { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes brk-shimmer{ from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes brk-banner { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: none; } }
+
+/* 1. Page load: rails of the first 12 stories draw top to bottom, 45ms stagger. Set data-intro on <main>, --i on each item. */
+[data-intro] .rail::before { animation: brk-draw var(--dur-4) var(--ease-out) both; animation-delay: calc(min(var(--i, 0), 12) * 45ms); }
+
+/* 2. Popover opens from its anchor */
+.popover[data-state="open"] { animation: brk-pop var(--dur-2) var(--ease-snap) both; }
+
+/* 3. Relative time refreshed: brief highlighter flash on the changed element */
+.is-updated { animation: brk-flash 900ms var(--ease-out) 1; }
+
+/* 4. Filter sheet (mobile) */
+.sheet[data-state="open"] { animation: brk-sheet var(--dur-3) var(--ease-out) both; }
+
+/* 5. "N new stories" banner */
+.banner[data-state="open"] { animation: brk-banner var(--dur-3) var(--ease-out) both; }
+
+/* Skeleton while loading */
+.skeleton { background: linear-gradient(90deg, var(--c-line) 25%, color-mix(in srgb, var(--c-line) 40%, var(--c-paper)) 50%, var(--c-line) 75%) 0 0 / 200% 100%; animation: brk-shimmer 1.6s linear infinite; border-radius: var(--r-1); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .term { transition: none; }
+}

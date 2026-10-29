@@ -1,0 +1,77 @@
+/* Brève design tokens. Source of truth: never hardcode hex values in components. */
+:root {
+  /* Color: light ("Craie") */
+  --c-paper: #F1F3F0;      /* page background */
+  --c-surface: #FFFFFF;    /* popovers, sheets, inputs */
+  --c-ink: #0F1B2D;        /* "Nuit": text, wordmark */
+  --c-ink-2: #475569;      /* secondary text (6.8:1 on paper) */
+  --c-line: #D3D9D1;       /* dividers, low-importance rail */
+  --c-accent: #1736D9;     /* "Klein": links, importance, primary actions */
+  --c-accent-ink: #FFFFFF; /* text on accent (8.2:1) */
+  --c-mark: #F7E34B;       /* "Surligneur": glossary highlight only */
+  --c-mark-ink: #0F1B2D;   /* text on mark (13.2:1) */
+  --c-focus: #1736D9;
+  --c-danger: #B42318;
+  --c-ok: #1A7F4B;
+
+  /* Type */
+  --font-display: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-ui: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-text: "Literata", Georgia, "Times New Roman", serif;
+
+  --fs-meta: 0.8125rem;   /* 13 */
+  --fs-ui: 0.9375rem;     /* 15 */
+  --fs-body: 1.0625rem;   /* 17 */
+  --fs-h3: 1.375rem;      /* 22 headline, standard story */
+  --fs-h2: 1.75rem;       /* 28 headline, high importance */
+  --fs-h1: 2.5rem;        /* 40 headline, flash */
+  --lh-tight: 1.12;
+  --lh-ui: 1.35;
+  --lh-text: 1.55;
+  --wdth-display: 88;     /* Archivo width axis, 62-125 */
+  --measure: 62ch;
+
+  /* Space (4px base) */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;   --s-7: 3rem;    --s-8: 4.5rem;
+
+  /* Radius: different on purpose, by role */
+  --r-0: 0;          /* feed items, rails: square */
+  --r-1: 4px;        /* buttons, inputs */
+  --r-2: 10px;       /* popovers, sheets */
+  --r-pill: 999px;   /* filter chips only */
+
+  /* Importance rail widths (encodes importance, see BRAND.md) */
+  --rail-1: 2px; --rail-2: 4px; --rail-3: 8px;
+
+  /* Layout (breakpoints for reference: 640 / 900 / 1180) */
+  --gutter-time: 4.5rem;
+  --col-filters: 15rem;
+  --col-feed: 42.5rem;
+  --col-aside: 17.5rem;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-snap: cubic-bezier(0.3, 1.4, 0.4, 1);
+  --dur-1: 120ms; --dur-2: 200ms; --dur-3: 320ms; --dur-4: 600ms;
+
+  /* Popover: hard yellow offset, no soft grey shadow */
+  --pop-shadow: 3px 3px 0 var(--c-mark);
+
+  /* Z */
+  --z-sticky: 10; --z-pop: 50; --z-sheet: 40;
+}
+
+/* Dark ("Abysse"): system preference unless data-theme is set */
+:root[data-theme="dark"] {
+  --c-paper: #0A1220; --c-surface: #111B2E; --c-ink: #E7ECF5; --c-ink-2: #9AA7BD;
+  --c-line: #22304A; --c-accent: #7E94FF; --c-accent-ink: #0A1220; --c-focus: #7E94FF;
+  --c-mark-ink: #0F1B2D; --c-danger: #F97066; --c-ok: #47CD89;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-paper: #0A1220; --c-surface: #111B2E; --c-ink: #E7ECF5; --c-ink-2: #9AA7BD;
+    --c-line: #22304A; --c-accent: #7E94FF; --c-accent-ink: #0A1220; --c-focus: #7E94FF;
+    --c-mark-ink: #0F1B2D; --c-danger: #F97066; --c-ok: #47CD89;
+  }
+}

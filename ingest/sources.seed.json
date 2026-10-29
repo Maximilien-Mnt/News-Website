@@ -1,0 +1,18 @@
+{
+  "_note": "Feeds are starting points. URLs change: the ingest health-check disables a feed after 5 consecutive failures. Check each outlet's terms of use before going public. authority (1-5) is a subjective editable weight.",
+  "sources": [
+    { "slug": "lemonde", "name": "Le Monde", "domain": "lemonde.fr", "feed_url": "https://www.lemonde.fr/rss/une.xml", "language": "fr", "country": "FR", "authority": 5 },
+    { "slug": "franceinfo", "name": "Franceinfo", "domain": "francetvinfo.fr", "feed_url": "https://www.francetvinfo.fr/titres.rss", "language": "fr", "country": "FR", "authority": 4 },
+    { "slug": "france24", "name": "France 24", "domain": "france24.com", "feed_url": "https://www.france24.com/fr/rss", "language": "fr", "country": "FR", "authority": 4 },
+    { "slug": "rfi", "name": "RFI", "domain": "rfi.fr", "feed_url": "https://www.rfi.fr/fr/rss", "language": "fr", "country": "FR", "authority": 4 },
+    { "slug": "euronews-fr", "name": "Euronews", "domain": "fr.euronews.com", "feed_url": "https://fr.euronews.com/rss", "language": "fr", "country": "FR", "authority": 4 },
+    { "slug": "lefigaro", "name": "Le Figaro", "domain": "lefigaro.fr", "feed_url": "https://www.lefigaro.fr/rss/figaro_actualites-a-la-une.xml", "language": "fr", "country": "FR", "authority": 4 },
+    { "slug": "bbc-world", "name": "BBC News", "domain": "bbc.com", "feed_url": "https://feeds.bbci.co.uk/news/world/rss.xml", "language": "en", "country": "GB", "authority": 5 },
+    { "slug": "guardian-world", "name": "The Guardian", "domain": "theguardian.com", "feed_url": "https://www.theguardian.com/world/rss", "language": "en", "country": "GB", "authority": 5 },
+    { "slug": "aljazeera", "name": "Al Jazeera", "domain": "aljazeera.com", "feed_url": "https://www.aljazeera.com/xml/rss/all.xml", "language": "en", "country": "QA", "authority": 4 },
+    { "slug": "dw", "name": "Deutsche Welle", "domain": "dw.com", "feed_url": "https://rss.dw.com/rdf/rss-en-all", "language": "en", "country": "DE", "authority": 4 },
+    { "slug": "npr", "name": "NPR", "domain": "npr.org", "feed_url": "https://feeds.npr.org/1001/rss.xml", "language": "en", "country": "US", "authority": 4 },
+    { "slug": "techcrunch", "name": "TechCrunch", "domain": "techcrunch.com", "feed_url": "https://techcrunch.com/feed/", "language": "en", "country": "US", "authority": 3 },
+    { "slug": "nature", "name": "Nature", "domain": "nature.com", "feed_url": "https://www.nature.com/nature.rss", "language": "en", "country": "GB", "authority": 5 }
+  ]
+}
