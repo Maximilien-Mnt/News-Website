@@ -1,0 +1,68 @@
+---
+import { site } from "../lib/site";
+import BaseHeader from "../components/Header";
+import BaseFooter from "../components/Footer";
+
+interface Props {
+  title: string;
+  description?: string;
+  children: string;
+}
+
+const { title, description = site.tagline, children } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F1F3F0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/fonts.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/animations.css" />
+    <title>{title}</title>
+  </head>
+  <body data-theme="auto">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <a class="skip-link" href="#navigation">Aller à la navigation</a>
+
+    <!-- Script anti-flash : applique data-theme (clair/sombre/auto) depuis
+         localStorage("theme") AVANT le rendu du contenu. -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var root = document.documentElement;
+          if (stored === "light" || stored === "dark") {
+            root.setAttribute("data-theme", stored);
+          } else if (stored === "auto") {
+            root.removeAttribute("data-theme");
+          } else {
+            var prefersDark =
+              window.matchMedia("(prefers-color-scheme: dark)").matches;
+            root.setAttribute("data-theme", prefersDark ? "dark" : "light");
+          }
+        } catch (e) {
+          /* ignore */
+        }
+      })();
+    </script>
+
+    <header>
+      <BaseHeader />
+    </header>
+
+    <main>
+      <div id="contenu">{children}</div>
+    </main>
+
+    <footer>
+      <BaseFooter />
+    </footer>
+  </body>
+</html>
+

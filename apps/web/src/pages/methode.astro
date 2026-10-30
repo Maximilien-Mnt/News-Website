@@ -1,0 +1,52 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Méthode — Brève" description="Comment la Brève fabrique ses brèves.">
+  <article class="page methode">
+    <h1>Notre méthode</h1>
+    <p class="page__intro">
+      La Brève résume l’actualité mondiale en 1 à 3 phrases, vulgarisée, avec
+      sources liées. Cette page décrit comment cela fonctionne.
+    </p>
+
+    <section class="method__step">
+      <h2>1. Collecte</h2>
+      <p>
+        Un ingéreur nocturne (GitHub Actions toutes les heures) récupère les flux
+        RSS et les nouveaux articles. Les textes intégrals sont <strong>jamais
+        stockés</strong>.
+      </p>
+    </section>
+
+    <section class="method__step">
+      <h2>2. Résumé IA</h2>
+      <p>
+        Le modèle (variable <code>LLM_MODEL</code>) ne reçoit que titres +
+        extraits. La sortie est validée avec <strong>zod</strong> avant écriture.
+        En cas d’erreur, la brève reste <code>draft</code>.
+      </p>
+    </section>
+
+    <section class="method__step">
+      <h2>3. Validation et écriture</h2>
+      <p>
+        Une fois validée, la brève est écrite dans Supabase avec clé publique
+        côté navigateur (RLS). La clé secrète reste dans les variables
+        d’environnement d’ingestion uniquement.
+      </p>
+    </section>
+
+    <section class="method__step">
+      <h2>4. Surfaces</h2>
+      <p>
+        Chaque brève affiche ses sources liées, un glossaire surligné avec bulle,
+        un rail d’importance, et une notice « Résumé généré par IA ».
+      </p>
+    </section>
+
+    <p class="page__foot">
+      <a href="/a-propos">En savoir plus sur la marque</a>
+    </p>
+  </article>
+</BaseLayout>
