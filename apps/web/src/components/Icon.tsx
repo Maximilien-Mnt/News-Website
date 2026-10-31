@@ -114,10 +114,7 @@ export function Icon({ name, className }: IconProps) {
     };
     const fallback = aliases[name];
     if (fallback) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const Component = (require("lucide-react") as any)[fallback];
-      if (!Component) throw new Error(`Icône "${name}" manquante dans lucide-react.`);
-      return <Component className={className} aria-hidden="true" />;
+      throw new Error(`Icône "${name}" manuelle fallback non implémentée - vérifiez lucide-react.`);
     }
     throw new Error(`Icône "${name}" manquante dans lucide-react.`);
   }

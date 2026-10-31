@@ -42,7 +42,7 @@ export function formatTime(date: Date): string {
  * Utile seulement jusqu'à 1 j ; au-delà, on préfère absoluteTime.
  */
 export function relativeTime(date: Date | string, now: Date = new Date()): string {
-  const diffMs = Date.parse(date) - now.getTime();
+  const diffMs = toDate(date).getTime() - now.getTime();
 
   if (Math.abs(diffMs) < 60_000) return "à l'instant";
 

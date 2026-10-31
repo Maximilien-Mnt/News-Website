@@ -5,6 +5,7 @@
     "moduleResolution": "Bundler",
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "jsx": "react-jsx",
     "noImplicitOverride": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
