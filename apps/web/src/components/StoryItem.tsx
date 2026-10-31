@@ -7,6 +7,7 @@ import { TimeGutter } from "./TimeGutter.js";
 import { MetaRow } from "./MetaRow.js";
 import { SourceChips } from "./SourceChips.js";
 import { AiNotice } from "./AiNotice.js";
+import { GlossaryText } from "./GlossaryText";
 import type { Story } from "../lib/types.js";
 import { frTypo } from "../lib/frTypo.js";
 
@@ -36,7 +37,9 @@ export function StoryItem({ story, index }: StoryItemProps) {
             </a>
           </h2>
 
-          <p className="story-item__summary">{frTypo(story.summary)}</p>
+          <p className="story-item__summary">
+            <GlossaryText text={story.summary} terms={story.terms} />
+          </p>
 
           <MetaRow
             locations={story.locations}

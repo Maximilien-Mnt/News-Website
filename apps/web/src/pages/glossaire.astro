@@ -1,17 +1,59 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { WORDS } from "../lib/mocks/stories";
 ---
 
 <BaseLayout title="Glossaire — Brève" description="Les termes clés de la veille mondiale, surlignés au survol.">
   <article class="page glossaire">
     <h1>Glossaire</h1>
     <p class="page__intro">
-      Les termes que l’on souligne lorsqu’ils apparaissent dans le fil. Chaque
+      Les termes que l'on souligne lorsqu'ils apparaissent dans le fil. Chaque
       définition est originale (résumé, pas de citation).
     </p>
-    <div class="glossary__empty">
-      <p>Aucun terme pour le moment.</p>
-    </div>
+
+    <section class="glossary__alphabet">
+      {/* Letters A-Z with anchors */}
+      <div class="glossary__alphabet-bar">
+        {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map(
+          (letter) => (
+            <a
+              href={`#${letter.toLowerCase()}`}
+              class="glossary__alpha-link"
+              aria-label={`Termes commençant par ${letter}`}
+            >
+              {letter}
+            </a>
+          )
+        )}
+      </div>
+
+      {/* Terms grouped by letter */}
+      {Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)).map(
+        (letter) => {
+          const letterTerms = WORDS.filter(
+            (w) => w.term.toLowerCase().startsWith(letter.toLowerCase())
+          );
+          if (letterTerms.length === 0) return null;
+
+          return (
+            <section id={letter.toLowerCase()} class="glossary__letter-section">
+              <h2 class="glossary__letter-title">{letter}</h2>
+              <ul class="glossary__list">
+                {letterTerms.map((t) => (
+                  <li class="glossary__item">
+                    <a href="/b/demo-1" class="glossary__term-link">
+                      {t.term}
+                    </a>
+                    <p class="glossary__def">{t.definition}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        }
+      )}
+    </section>
+
     <p class="page__foot">
       <a href="/methode">Retour à la méthode</a>
     </p>
