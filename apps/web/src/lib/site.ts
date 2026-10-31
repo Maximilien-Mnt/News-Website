@@ -4,7 +4,7 @@
 export const site = {
   name: "Brève",
   tagline: "L'essentiel en quelques lignes.",
-  url: import.meta.env.PUBLIC_SITE_URL || "https://breve.app",
+  url: (import.meta as { env?: { PUBLIC_SITE_URL?: string } }).env?.PUBLIC_SITE_URL || "https://breve.app",
   contactEmail: "",
 } as const;
 

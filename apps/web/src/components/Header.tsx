@@ -1,9 +1,10 @@
-// En-tête sticky (56px) avec filet bas, wordmark, navigation,
-// bouton recherche (inactif) et ThemeToggle.
-// Spéc : DESIGN-SPEC §3.3 (thème), §5 (filet), §2 (wordmark ≠ logo).
-
-import { ThemeToggle } from "./ThemeToggle";
-import { Icon } from "./Icon";
+/**
+ * En-tête sticky (56px) avec filet bas, wordmark, navigation,
+ * bouton recherche et ThemeToggle.
+ */
+import { ThemeToggle } from './ThemeToggle'
+import { Icon } from './Icon'
+import { SearchBox } from '../lib/SearchBox'
 
 // Lien de navigation (à finaliser avec les routes réelles)
 const NAV_LINKS = [
@@ -11,9 +12,13 @@ const NAV_LINKS = [
   { label: "Glossaire", href: "/glossaire" },
   { label: "Méthode", href: "/methode" },
   { label: "À propos", href: "/a-propos" },
-] as const;
+] as const
 
-export function Header() {
+export function Header({ searchBox }: { searchBox?: React.ComponentType }) {
+  const handleSearch = (query: string) => {
+    window.location.href = `/?q=${encodeURIComponent(query)}`
+  }
+
   return (
     <header className="site-header">
       <div className="site-header__row">
@@ -35,21 +40,25 @@ export function Header() {
         </nav>
 
         <div className="site-header__actions">
-          {/* Bouton recherche : inactif pour l'instant */}
-          <button
-            type="button"
-            className="site-header__search-btn"
-            disabled
-            aria-label="Recherche (non fonctionnelle pour l'instant)"
-          >
-            <Icon name="search" className="site-header__search-icon" />
-          </button>
+          {/* Bouton recherche */}
+          {searchBox ? (
+            <SearchBox onSearch={handleSearch} onKeyDown={undefined} />
+          ) : (
+            <button
+              type="button"
+              className="site-header__search-btn"
+              disabled
+              aria-label="Recherche (non fonctionnelle pour l'instant)"
+            >
+              <Icon name="search" className="site-header__search-icon" />
+            </button>
+          )}
 
           <ThemeToggle />
         </div>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

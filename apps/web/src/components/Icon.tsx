@@ -66,11 +66,13 @@ export interface IconProps {
     | "alert";
   "aria-label"?: string; // requis si l'icône est interactive ou informative
   className?: string;
+  width?: string;
+  style?: React.CSSProperties;
 }
 
 const NAMED_ICONS: Record<
   IconProps["name"],
-  React.ComponentType<{ className?: string }>
+  React.ComponentType<{ className?: string; width?: string; style?: React.CSSProperties }>
 > = {
   external: ArrowUpRight,
   clock: Clock,
@@ -104,7 +106,7 @@ const NAMED_ICONS: Record<
  * existant. Si un nom est absent, lève immédiatement pour signaler le repli
  * (ré-énumérer la version installée de lucide-react).
  */
-export function Icon({ name, className }: IconProps) {
+export function Icon({ name, className, width, style }: IconProps) {
   const LucideIcon = NAMED_ICONS[name];
   if (!LucideIcon) {
     // Repli : nommer le composant réseau et re-mapper.
@@ -121,6 +123,8 @@ export function Icon({ name, className }: IconProps) {
   return (
     <LucideIcon
       className={className}
+      width={width}
+      style={style}
       aria-hidden="true"
     />
   );
