@@ -333,3 +333,305 @@ img, svg { display: block; max-width: 100%; }
 
 /* Icons: online library (Lucide). Overrides the library defaults so every icon gets the angular Brève look. */
 .icon, svg.lucide { width: 1.125em; height: 1.125em; flex: none; stroke-width: 1.75; stroke-linecap: square; stroke-linejoin: miter; }
+
+/* ---------- Page d'accueil : grille 3 colonnes ---------- */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-6);
+  padding: var(--s-4);
+  max-width: 100%;
+}
+
+@media (min-width: 1180px) {
+  .home-grid {
+    grid-template-columns:
+      var(--col-filters)
+      var(--col-feed)
+      var(--col-aside);
+    gap: var(--s-6);
+    padding: var(--s-6);
+    max-width: none;
+  }
+}
+
+.home-filters { display: contents; }
+.home-aside { display: contents; }
+
+/* ---------- StoryList ---------- */
+.story-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.story-list__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.story-list__group-title {
+  position: sticky;
+  top: 0;
+  background: var(--c-paper);
+  font-family: var(--font-ui);
+  font-size: var(--fs-ui);
+  font-weight: 600;
+  color: var(--c-ink-2);
+  padding: var(--s-2) 0;
+  z-index: var(--z-sticky);
+}
+
+.story-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.story-list__item { margin: 0; }
+
+/* ---------- StoryItem ---------- */
+.story-item {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid var(--c-line);
+}
+
+.story-item:last-child { border-bottom: none; }
+.story-item--skeleton { border: none; }
+
+.story-item__inner {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.story-item__time-skeleton { flex: none; }
+.story-item__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.story-item__headline {
+  font-size: var(--fs-h3);
+  font-family: var(--font-display);
+  font-weight: 750;
+  font-stretch: calc(var(--wdth-display) * 1%);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.012em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.story-item__headline a {
+  color: var(--c-ink);
+  text-decoration: none;
+}
+
+.story-item__headline a:hover {
+  color: var(--c-accent);
+  text-decoration-thickness: 2px;
+}
+
+.story-item__summary {
+  font-family: var(--font-text);
+  font-size: var(--fs-body);
+  line-height: var(--lh-text);
+  margin: 0;
+  max-width: none;
+}
+
+.story-item__footer {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-2);
+}
+
+/* ---------- TimeGutter ---------- */
+.time-gutter {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-1);
+}
+
+.time-gutter time {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  color: var(--c-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.time-gutter__group {
+  display: none;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-ink-2);
+}
+
+/* ---------- MetaRow ---------- */
+.meta-row {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.meta-row__item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+}
+
+.meta-row__icon {
+  width: 1.125em;
+  height: 1.125em;
+  flex: none;
+  color: var(--c-ink-2);
+}
+
+.meta-row__text {
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  color: var(--c-ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- SourceChips ---------- */
+.source-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  align-items: center;
+}
+
+.source-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-1);
+  background: transparent;
+  color: var(--c-ink);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+}
+
+.source-chip:hover {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
+.source-chip:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+.source-chip__overflow {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-1);
+  background: transparent;
+  color: var(--c-ink-2);
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+}
+
+.source-chip__favicon {
+  width: 1.125em;
+  height: 1.125em;
+  flex: none;
+  border-radius: var(--r-1);
+}
+
+.source-chip__monogram {
+  width: 1.125em;
+  height: 1.125em;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--c-ink-2);
+}
+
+/* ---------- AiNotice ---------- */
+.ai-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  border: none;
+  background: transparent;
+  color: var(--c-ink-2);
+  cursor: pointer;
+  padding: var(--s-1);
+  border-radius: var(--r-1);
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+}
+
+.ai-notice:hover {
+  color: var(--c-accent);
+  background: color-mix(in srgb, var(--c-ink) 4%, transparent);
+}
+
+.ai-notice:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+}
+
+.ai-popover__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-1);
+  color: var(--c-accent);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  font-size: var(--fs-meta);
+  font-weight: 500;
+  margin-top: var(--s-1);
+}
+
+.ai-popover__link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Skeleton ---------- */
+.story-item--skeleton .story-item__headline-skeleton,
+.story-item--skeleton .story-item__summary-skeleton,
+.story-item--skeleton .story-item__meta-skeleton,
+.story-item--skeleton .story-item__sources-skeleton,
+.story-item--skeleton .story-item__ai-skeleton {
+  margin-top: var(--s-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none !important; background: var(--c-line); }
+}
+
+/* 375px : pas de scroll horizontal */
+@media (max-width: 375px) {
+  .home-grid { padding: var(--s-2); }
+  .story-item { gap: var(--s-3); }
+}

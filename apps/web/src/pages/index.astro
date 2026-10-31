@@ -1,10 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StoryList from '../components/StoryList';
+import { STORIES } from '../lib/mocks/stories';
 ---
 
 <BaseLayout title="Accueil — Brève">
-  <div class="home-placeholder">
-    <h1>Le fil arrive.</h1>
-    <p>Bientôt : actualité mondiale en 1 à 3 phrases, vulgarisée, avec sources et glossaire.</p>
-  </div>
+  <main data-intro class="home-grid">
+    <aside class="home-filters" id="filtres">
+      <span class="visually-hidden">Colonne des filtres (vide pour l'instant)</span>
+    </aside>
+
+    <StoryList stories={STORIES} client:load />
+
+    <aside class="home-aside" id="aside">
+      <span class="visually-hidden">Colonne aside (vide pour l'instant)</span>
+    </aside>
+  </main>
 </BaseLayout>
