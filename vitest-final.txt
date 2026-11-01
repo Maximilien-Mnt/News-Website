@@ -1,0 +1,172 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.5 [39m[90mC:/Users/maxim/News-Website[39m
+
+ [32mÔ£ô[39m apps/web/src/lib/glossary.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32mÔ£ô[39m apps/web/src/lib/levels.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32mÔ£ô[39m apps/web/src/lib/frTypo.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [31mÔØ»[39m apps/web/src/lib/time.test.ts [2m([22m[2m14 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 16[2mms[22m[39m
+   [31mÔØ»[39m time [2m(14)[22m
+     [32mÔ£ô[39m should format a time correctly (uses local time, may vary by system)[32m 2[2mms[22m[39m
+     [32mÔ£ô[39m relativeTime [2m(5)[22m
+       [32mÔ£ô[39m should return '├á l'instant' for < 1 min[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m should return 'il y a 12 min' for 12 min ago[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return 'il y a 3 h' for 3 h ago[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m should return 'il y a 1 min' for 1 min ago[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return 'dans 1 min' for 1 min in the future[32m 0[2mms[22m[39m
+     [31mÔØ»[39m absoluteTime [2m(3)[22m
+       [32mÔ£ô[39m should return relative label when less than 1 day ago[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return weekday+date for < 7 days ago[32m 0[2mms[22m[39m
+[31m       [31m├ù[31m should return date+year for older than 7 days[39m[32m 7[2mms[22m[39m
+     [32mÔ£ô[39m groupLabel [2m(5)[22m
+       [32mÔ£ô[39m should return 'Derni├¿re heure' for < 60 min[32m 1[2mms[22m[39m
+       [32mÔ£ô[39m should return 'Aujourd'hui' for < 24 h[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return 'Hier' for yesterday[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return 'Cette semaine' for < 7 days[32m 0[2mms[22m[39m
+       [32mÔ£ô[39m should return 'Plus ancien' for >= 7 days[32m 0[2mms[22m[39m
+ [31mÔØ»[39m apps/web/src/lib/filters.test.ts [2m([22m[2m15 tests[22m[2m | [22m[31m6 failed[39m[2m)[22m[32m 17[2mms[22m[39m
+   [31mÔØ»[39m serializeFilters / parseFilters [2m(4)[22m
+     [32mÔ£ô[39m retourne une cha├«ne vide pour les filtres par d├®faut[32m 2[2mms[22m[39m
+     [32mÔ£ô[39m s├®rialise l'objet de recherche[32m 0[2mms[22m[39m
+[31m     [31m├ù[31m s├®rialise les tableaux sous forme de cha├«nes s├®par├®es par des virgules[39m[32m 5[2mms[22m[39m
+[31m     [31m├ù[31m arrondit la s├®rialisation[39m[32m 2[2mms[22m[39m
+   [31mÔØ»[39m buildStoriesParams [2m(11)[22m
+[31m     [31m├ù[31m ne fait aucun filtre pour les filtres par d├®faut (tri=une)[39m[32m 4[2mms[22m[39m
+[31m     [31m├ù[31m souhaite last_source_at pour tri="recent"[39m[32m 1[2mms[22m[39m
+     [32mÔ£ô[39m traduit periode en seuil last_source_at[32m 0[2mms[22m[39m
+     [32mÔ£ô[39m traduit cat├®gorie avec in[32m 0[2mms[22m[39m
+     [32mÔ£ô[39m traduit importance avec gte[32m 1[2mms[22m[39m
+     [32mÔ£ô[39m traduit importance "brief" avec lt.40[32m 0[2mms[22m[39m
+     [32mÔ£ô[39m traduit pays avec ov[32m 0[2mms[22m[39m
+     [32mÔ£ô[39m traduit langue avec ov[32m 0[2mms[22m[39m
+[31m     [31m├ù[31m traduit source avec cs sur le domaine[39m[32m 1[2mms[22m[39m
+[31m     [31m├ù[31m ├®chappe le motif de recherche pour ilike[39m[32m 1[2mms[22m[39m
+     [32mÔ£ô[39m ordre pour chaque valeur de tri[32m 0[2mms[22m[39m
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ» Failed Tests 7 ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > serializeFilters / parseFilters > s├®rialise les tableaux sous forme de cha├«nes s├®par├®es par des virgules
+AssertionError: expected 'periode=7j&pays[]=FR&pays[]=CH&lang[]ÔÇª' to be 'periode=7j&pays=FR,CH&lang=fr' // Object.is equality
+
+Expected: "periode=7j&pays=FR,CH&lang=fr"
+Received: "periode=7j&pays[]=FR&pays[]=CH&lang[]=fr"
+
+ ÔØ» apps/web/src/lib/filters.test.ts:27:7
+     25|         lang: ['fr'],
+     26|       }),
+     27|     ).toBe('periode=7j&pays=FR,CH&lang=fr');
+       |       ^
+     28|   });
+     29|
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[1/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > serializeFilters / parseFilters > arrondit la s├®rialisation
+ReferenceError: search is not defined
+ ÔØ» parseFilters apps/web/src/lib/filters.ts:126:3
+    124|
+    125|   // q : recherche textuelle
+    126|   if (search.has('q')) {
+       |   ^
+    127|     const q = search.get('q')!.trim()
+    128|     if (q) result.q = q
+ ÔØ» apps/web/src/lib/filters.test.ts:41:12
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[2/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > buildStoriesParams > ne fait aucun filtre pour les filtres par d├®faut (tri=une)
+AssertionError: expected { Object (last_source_at.gte) } to deeply equal { order: 'hot_score.desc' }
+
+- Expected
++ Received
+
+  {
+-   "order": "hot_score.desc",
++   "last_source_at.gte": "2026-10-30T12:00:00.000Z",
+  }
+
+ ÔØ» apps/web/src/lib/filters.test.ts:49:53
+     47|
+     48|   it('ne fait aucun filtre pour les filtres par d├®faut (tri=une)', () ÔÇª
+     49|     expect(buildStoriesParams(defaultFilters, now)).toEqual({ order: 'ÔÇª
+       |                                                     ^
+     50|   });
+     51|
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[3/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > buildStoriesParams > souhaite last_source_at pour tri="recent"
+AssertionError: expected undefined to be 'last_source_at.desc.nullslast' // Object.is equality
+
+- Expected:
+"last_source_at.desc.nullslast"
+
++ Received:
+undefined
+
+ ÔØ» apps/web/src/lib/filters.test.ts:54:26
+     52|   it('souhaite last_source_at pour tri="recent"', () => {
+     53|     const params = buildStoriesParams({ ...defaultFilters, tri: 'recenÔÇª
+     54|     expect(params.order).toBe('last_source_at.desc.nullslast');
+       |                          ^
+     55|   });
+     56|
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[4/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > buildStoriesParams > traduit source avec cs sur le domaine
+AssertionError: expected 'cs.[[{"domain":"bbc-world"}]]' to be 'cs.[{"domain":"bbc-world"}]' // Object.is equality
+
+Expected: "cs.[{"domain":"bbc-world"}]"
+Received: "cs.[[{"domain":"bbc-world"}]]"
+
+ ÔØ» apps/web/src/lib/filters.test.ts:86:83
+     84|
+     85|   it('traduit source avec cs sur le domaine', () => {
+     86|     expect(buildStoriesParams({ ...defaultFilters, src: ['bbc-world'] ÔÇª
+       |                                                                                   ^
+     87|       'cs.[{"domain":"bbc-world"}]',
+     88|     );
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[5/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/filters.test.ts > buildStoriesParams > ├®chappe le motif de recherche pour ilike
+AssertionError: expected 'headline.ilike.*.100\%,summary.ilike.ÔÇª' to be 'headline.ilike.*.100\% ,summary.ilikeÔÇª' // Object.is equality
+
+Expected: "headline.ilike.*.100\% ,summary.ilike.*.100\%"
+Received: "headline.ilike.*.100\%,summary.ilike.*.100\%"
+
+ ÔØ» apps/web/src/lib/filters.test.ts:93:23
+     91|   it('├®chappe le motif de recherche pour ilike', () => {
+     92|     const params = buildStoriesParams({ ...defaultFilters, q: '100%' }ÔÇª
+     93|     expect(params.or).toBe('headline.ilike.*.100\\% ,summary.ilike.*.1ÔÇª
+       |                       ^
+     94|   });
+     95|
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[6/7]ÔÄ»
+
+ FAIL  apps/web/src/lib/time.test.ts > time > absoluteTime > should return date+year for older than 7 days
+
+AssertionError: expected '16 oct. 2026' to match /\\d{1,2} oct\. \\d{4}/
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[31m7 failed[39m[22m[2m | [22m[1m[32m41 passed[39m[22m[90m (48)[39m
+[2m   Start at [22m 13:50:25
+[2m   Duration [22m 537ms[2m (import 63%, transform 16%, tests 12%, worker 9%)[22m
+
+
+- Expected:
+/\\d{1,2} oct\. \\d{4}/
+
++ Received:
+"16 oct. 2026"
+
+ ÔØ» apps/web/src/lib/time.test.ts:55:51
+     53|     it("should return date+year for older than 7 days", () => {
+     54|       const twoWeeksAgo = new Date(baseDate.getTime() - 14 * 86_400_00ÔÇª
+     55|       expect(absoluteTime(twoWeeksAgo, baseDate)).toMatch(/\\d{1,2} ocÔÇª
+       |                                                   ^
+     56|     });
+     57|   });
+
+ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»ÔÄ»[7/7]ÔÄ»
+
