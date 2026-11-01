@@ -1,20 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import StoryList from '../components/StoryList'
-import { STORIES } from '../lib/mocks/stories'
-import { FilterPanel } from '../lib/FilterPanel'
-import { ActiveFilters } from '../lib/ActiveFilters'
+import { FeedClient } from '../components/FeedClient'
 
 ---
 <BaseLayout title="Accueil — Brève">
   <main data-intro class="home-grid">
     <aside class="home-filters" id="filtres">
       <span class="visually-hidden">Colonne des filtres</span>
-      <FilterPanel stories={STORIES} onReset={() => {}} client:load />
-      <ActiveFilters onFilterRemove={() => {}} onReset={() => {}} client:load />
+      <FeedClient client:load />
     </aside>
-
-    <StoryList stories={STORIES} client:load />
 
     <aside class="home-aside" id="aside">
       <span class="visually-hidden">Colonne aside</span>

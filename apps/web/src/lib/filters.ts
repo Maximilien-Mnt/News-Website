@@ -9,6 +9,14 @@
 
 import type { Story, StorySource } from "./types";
 
+export interface Facets {
+  periode: Record<string, number>;
+  imp: Record<string, number>;
+  cat: Record<string, number>;
+  pays: Record<string, number>;
+  lang: Record<string, number>;
+}
+
 /** Toutes les clés possibles du filtre, order matters pour serialize/parse */
 export type Filters = {
   q: string          // recherche textuelle (correspond aux titres/résumés)
@@ -111,7 +119,7 @@ export function applyFilters(
  * Analyse les searchParams de l'URL et retourne un objet Filters.
  * Les valeurs invalides sont ignorées (rejetées au profit des défauts).
  */
-export function parseFilters(search: URLSearchParams): Filters {
+export function parseFilters(input: string | URLSearchParams): Filters {
   const result = { ...defaultFilters }
 
   // q : recherche textuelle
@@ -301,16 +309,10 @@ export function sortStories(stories: Story[], tri: Tri): Story[] {
 }
 
 /**
- * Calcule les facettes (compteurs) à afficher dans le panneau de filtres.
- * Retourne un objet clé-valeur {label, count} pour chaque facette.
+ * Calcule les facettes (comptages par période, importance, catégorie, pays, langue)
+ * à partir d'une liste d'histoires.
  */
-export function facets(stories: Story[]): {
-  periode: Record<string, number>
-  imp: Record<string, number>
-  cat: Record<string, number>
-  pays: Record<string, number>
-  lang: Record<string, number>
-} {
+export function computeFacets(stories: Story[], now: Date = new Date()): Facets {
   const periodeCounts: Record<string, number> = {
     '24h': 0,
     '7j': 0,
@@ -318,7 +320,7 @@ export function facets(stories: Story[]): {
     '3m': 0,
     '6m': 0,
     '1a': 0,
-  }
+  };
   const impCounts: Record<string, number> = { essential: 0, important: 0, follow: 0, brief: 0 }
   const catCounts: Record<string, number> = {}
   const paysCounts: Record<string, number> = {}

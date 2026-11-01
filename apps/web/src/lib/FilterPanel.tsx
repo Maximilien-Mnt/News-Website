@@ -10,12 +10,11 @@
  * Mobile : bouton "Filtrer" qui ouvre une feuille plein écran
  */
 import { useFilters } from '../lib/useFilters'
-import { facets } from '../lib/filters'
-import type { Story } from './types'
 import type { Filters } from './filters'
-export function FilterPanel({ stories, onReset }: { stories: Story[]; onReset: () => void }) {
+import type { Facets } from '../lib/api'
+
+export function FilterPanel({ facets, storiesCount, onReset }: { facets: Facets; storiesCount: number; onReset: () => void }) {
   const { updateFilter } = useFilters()
-  const facetCounts = facets(stories)
 
   return (
     <fieldset
@@ -29,7 +28,7 @@ export function FilterPanel({ stories, onReset }: { stories: Story[]; onReset: (
       <legend style={{ fontSize: '0.875rem', fontWeight: '500', cursor: 'pointer' }}>
         Filtres
         <span style={{ float: 'right', marginLeft: '8px', fontSize: '0.75rem', color: 'var(--c-ink-2)' }}>
-          {facetCounts.periode['24h']} sur {stories.length}
+          {facets.periode['24h']} sur {storiesCount}
         </span>
       </legend>
 

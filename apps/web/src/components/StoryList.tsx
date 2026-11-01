@@ -8,13 +8,14 @@ import type { Story } from "../lib/types.js";
 
 export interface StoryListProps {
   stories: Story[];
+  onLoadMore?: () => void;
 }
 
 /**
  * Regroupe les brèves par période et rend chaque groupe avec un titre collant.
  * Chaque brève a son propre <h2>.
  */
-export function StoryList({ stories }: StoryListProps) {
+export function StoryList({ stories, onLoadMore }: StoryListProps) {
   // Trier par date décroissante (plus récent en premier)
   const sorted = [...stories].sort(
     (a, b) =>
@@ -35,14 +36,19 @@ export function StoryList({ stories }: StoryListProps) {
         <section key={label} className="story-list__group">
           <h2 className="story-list__group-title">{label}</h2>
           <ul className="story-list__items">
-            {groupStories.map((story) => (
+            {groupStories.map((story, index) => (
               <li key={story.id} className="story-list__item">
-                <StoryItem story={story} />
+                <StoryItem story={story} index={index} />
               </li>
             ))}
           </ul>
         </section>
       ))}
+      {onLoadMore && (
+        <div className="story-list__load-more">
+          <button onClick={onLoadMore}>Charger plus de brèves</button>
+        </div>
+      )}
     </div>
   );
 }
