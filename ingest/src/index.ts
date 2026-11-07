@@ -8,6 +8,8 @@ import {
 import { loadSources, syncSources } from './sources';
 import { fetchFeed } from './fetchFeeds';
 import { normalizeItem } from './normalize';
+import { clusterArticles, normalizeSlugTitle } from './cluster';
+import { createStory, updateStoryWithNewArticle, initializeRawArticles } from './persist';
 import type { SourceRow } from './types';
 
 async function main(): Promise<void> {
@@ -68,8 +70,129 @@ async function main(): Promise<void> {
   }
 
   const finishedAt = new Date();
+  let storiesCreated = 0;
+  let storiesUpdated = 0;
+
+  if (!cfg.DRY_RUN) {
+    // Get all newly inserted raw articles that don't have a story_id yet
+    const { data: unassignedArticles, error: fetchError } = await supabase
+      .from('raw_articles')
+      .select('*')
+      .is('story_id', null);
+
+    if (fetchError) throw fetchError;
+    if (!unassignedArticles || unassignedArticles.length === 0) {
+      console.log('[ingest] No new unassigned articles to cluster');
+    } else {
+      // Build the unclustered items for clustering
+      const unclustered = unassignedArticles.map((article: any) => ({
+        article: {
+          source_id: article.source_id,
+          url: article.url,
+          url_hash: article.url_hash,
+          title: article.title,
+          snippet: article.snippet,
+          language: article.language,
+          published_at: article.published_at,
+          title_tokens: article.title_tokens,
+        } as RawArticle,
+      }));
+
+      // Get existing stories with their data for clustering
+      const { data: existingStories, error: storiesError } = await supabase
+        .from('stories')
+        .select('id, slug, headline, published_at, title_tokens')
+        .neq('status', 'published');
+
+      if (storiesError) throw storiesError;
+
+      // Run clustering
+      const assignments = clusterArticles(unclustered, existingStories || []);
+
+      // Process assignments: group by storyId
+      const storyGroups = new Map<number | string, {
+        articles: RawArticle[];
+        sources: Array<{ source_id: number; language: string }>;
+      }>();
+
+      for (let i = 0; i < assignments.length; i++) {
+        const assignment = assignments[i];
+        const article = unclustered[i].article;
+
+        if (assignment.storyId === null) {
+          // Create new story
+          const newStoryId = await createStory(article, article.source_id, article.language);
+          storiesCreated++;
+
+          // Initialize group for new story
+          if (!storyGroups.has(null)) {
+            storyGroups.set(null, { articles: [], sources: [] });
+          }
+          storyGroups.get(null)!.articles.push(article);
+          storyGroups.get(null)!.sources.push({
+            source_id: article.source_id,
+            language: article.language,
+          });
+        } else {
+          const storyId = typeof assignment.storyId === 'number'
+            ? assignment.storyId
+            : Number(assignment.storyId);
+
+          // Check if story already has articles from this source
+          const existingGroup = Array.from(storyGroups.values()).find(
+            (g) => g.sources.some(
+              (s: { source_id: number }) => s.source_id === article.source_id,
+            ),
+          );
+
+          if (existingGroup) {
+            // Update existing story with new source
+            storiesUpdated++;
+            await updateStoryWithNewArticle(storyId, article.source_id, article.language);
+
+            if (
+              !existingGroup.articles.some(
+                (a: RawArticle) => a.url_hash === article.url_hash,
+              )
+            ) {
+              existingGroup.articles.push(article);
+              existingGroup.sources.push({
+                source_id: article.source_id,
+                language: article.language,
+              });
+            }
+          } else {
+            // Assign to existing story
+            storiesUpdated++;
+            await updateStoryWithNewArticle(storyId, article.source_id, article.language);
+
+            if (!storyGroups.has(storyId)) {
+              storyGroups.set(storyId, { articles: [], sources: [] });
+            }
+            storyGroups.get(storyId)!.articles.push(article);
+            storyGroups.get(storyId)!.sources.push({
+              source_id: article.source_id,
+              language: article.language,
+            });
+          }
+        }
+      }
+
+      // Mark articles as assigned by setting story_id
+      const urlHashes = unassignedArticles.map((a: any) => a.url_hash);
+      if (urlHashes.length > 0) {
+        await initializeRawArticles(urlHashes);
+      }
+
+      console.log(`[ingest] Clustering: created=${storiesCreated}, updated=${storiesUpdated}`);
+    }
+  } else {
+    // DRY_RUN mode: just log what would happen
+    console.log('[ingest-DRY_RUN] Would cluster articles and create/update stories');
+  }
+
   console.log(
-    `[ingest] done: feedsOk=${feedsOk} feedsFailed=${feedsFailed} newArticles=${newArticles}`,
+    `[ingest] done: feedsOk=${feedsOk} feedsFailed=${feedsFailed} newArticles=${newArticles}, storiesCreated=${storiesCreated}, storiesUpdated=${storiesUpdated}`,
   );
 
   if (!cfg.DRY_RUN) {
