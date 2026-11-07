@@ -126,7 +126,7 @@ Fais:
 Critères: le fil affiche les 6 brèves de démo; chaque filtre fonctionne contre la base; aucune requête vers raw_articles; build OK.
 ```
 
-## P7 · Ingestion: flux RSS (Plan → Act)
+## P7 · Ingestion: flux RSS (Plan → Act) (fait)
 ```text
 Prérequis (moi): SUPABASE_URL et SUPABASE_SECRET_KEY dans .env.
 Lis docs/PROJECT.md (flux, règles de contenu), .clinerules/03-data-and-ai.md, ingest/sources.seed.json, supabase/migrations/0001_init.sql.

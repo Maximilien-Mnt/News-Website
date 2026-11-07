@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+  <channel>
+    <title>Test Feed</title>
+    <link>https://example.com/</link>
+    <description>Test feed for offline normalization tests.</description>
+    <item>
+      <title>Titre avec &amp; entit&eacute;s</title>
+      <link>https://lemonde.fr/article?utm_source=rss&amp;utm_medium=feed#section</link>
+      <description><p>Un <b>extrait</b> avec du HTML.</p></description>
+      <pubDate>Mon, 01 Jan 2024 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Old news</title>
+      <link>https://example.com/old</link>
+      <description>Old article.</description>
+      <pubDate>Mon, 01 Jan 2020 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Sans date</title>
+      <link>https://example.com/no-date</link>
+      <description>No pub date.</description>
+    </item>
+  </channel>
+</rss>
