@@ -13,6 +13,7 @@ import StoryList from './StoryList';
 import StoryListSkeleton from './StoryListSkeleton';
 import { FilterPanel } from '../lib/FilterPanel';
 import { ActiveFilters } from '../lib/ActiveFilters';
+import { capturePostHog, logPostHog } from '../lib/posthog';
 
 export function FeedClient() {
   const { filters, updateFilter, resetFilters } = useFilters();
@@ -30,6 +31,7 @@ export function FeedClient() {
       setError(null);
       const result = await fetchStories(filters, p);
       if (!result.ok) {
+        logPostHog('error', 'feed page load failed', { page: p });
         setError(result.error.message);
         setLoading(false);
         return;
@@ -61,14 +63,21 @@ export function FeedClient() {
 
   const loadMore = useCallback(async () => {
     if (loadingMore) return;
+    capturePostHog('feed_load_more', { next_page: page + 1 });
+    logPostHog('info', 'feed load more requested', { page: page + 1 });
     setLoadingMore(true);
     setError(null);
     const result = await fetchStories(filters, page + 1);
     setLoadingMore(false);
     if (!result.ok) {
+      logPostHog('error', 'feed load more failed', { page: page + 1 });
       setError(result.error.message);
       return;
     }
+    logPostHog('info', 'feed load more completed', {
+      page: page + 1,
+      story_count: result.data.length,
+    });
     setStories((prev) => [...prev, ...result.data]);
     setPage((p) => p + 1);
     setTotalPages(result.totalPages);

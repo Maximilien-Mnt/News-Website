@@ -2,6 +2,7 @@
 import { site } from "../lib/site";
 import BaseHeader from "../components/Header";
 import BaseFooter from "../components/Footer";
+import PostHog from "../components/posthog.astro";
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ const { title, description = site.tagline, children } = Astro.props;
     <link rel="stylesheet" href="/src/styles/base.css" />
     <link rel="stylesheet" href="/src/styles/animations.css" />
     <title>{title}</title>
+    <PostHog />
   </head>
   <body data-theme="auto">
     <a class="skip-link" href="#contenu">Aller au contenu</a>

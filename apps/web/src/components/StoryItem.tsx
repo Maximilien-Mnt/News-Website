@@ -10,6 +10,7 @@ import { AiNotice } from "./AiNotice.js";
 import { GlossaryText } from "./GlossaryText";
 import type { Story } from "../lib/types.js";
 import { frTypo } from "../lib/frTypo.js";
+import { capturePostHog } from "../lib/posthog";
 
 export interface StoryItemProps {
   story: Story;
@@ -32,7 +33,15 @@ export function StoryItem({ story, index }: StoryItemProps) {
 
         <div className="story-item__content">
           <h2 className="story-item__headline">
-            <a href={`/b/${story.slug}`} aria-label={frTypo(story.headline)}>
+            <a
+              href={`/b/${story.slug}`}
+              aria-label={frTypo(story.headline)}
+              onClick={() => capturePostHog("story_opened", {
+                story_id: story.id,
+                category: story.category,
+                importance_level: level,
+              })}
+            >
               {frTypo(story.headline)}
             </a>
           </h2>

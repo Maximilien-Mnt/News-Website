@@ -9,6 +9,7 @@
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { splitWithTerms } from "../lib/glossary";
 import { frTypo } from "../lib/frTypo.js";
+import { capturePostHog } from "../lib/posthog";
 
 type TermInfo = {
   surface: string;
@@ -48,6 +49,7 @@ export function GlossaryText({
               className={`glossary-text__term ${termClassName} term`}
               aria-expanded="false"
               aria-controls={`glossary-popover-${segIdx}`}
+              onClick={() => capturePostHog("glossary_term_opened")}
             >
               {segment.term}
             </button>
