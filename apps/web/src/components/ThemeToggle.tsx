@@ -7,6 +7,7 @@
 
 import { useState } from "react";
 import { Icon, type IconProps } from "./Icon";
+import { capturePostHog } from "../lib/posthog";
 
 type Theme = "auto" | "light" | "dark";
 
@@ -37,6 +38,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   function cycleTheme() {
     const next = nextTheme();
     setTheme(next);
+    capturePostHog("theme_changed", { theme: next });
     try {
       localStorage.setItem("theme", next);
     } catch {
